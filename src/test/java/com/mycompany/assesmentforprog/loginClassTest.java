@@ -18,7 +18,7 @@ public class loginClassTest {
     }
     
     
-    
+    //this is to validate whether userName is correct
     @Test
     public void testValidateUserName() {
         System.out.println("validateUserName");
