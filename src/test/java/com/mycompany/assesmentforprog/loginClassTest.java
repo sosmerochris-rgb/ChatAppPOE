@@ -40,7 +40,7 @@ public class loginClassTest {
         assertEquals(expResult, result);
         
     }
-    
+    //this is to testwhether the password is valid
     @Test
     public void testValidatePassword() {
         System.out.println("validatePassword");
