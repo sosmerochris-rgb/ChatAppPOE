@@ -33,7 +33,7 @@ public class loginClassTest {
     @Test
     public void testInValidateUserName() {
         System.out.println("validateUserName");
-        String UserName = "soo11s";
+        String UserName = "soo11sstr";
         loginClass instance = new loginClass();
         boolean expResult = false;
         boolean result = instance.validateUserName(UserName);
