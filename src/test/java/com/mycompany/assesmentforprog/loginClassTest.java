@@ -29,7 +29,7 @@ public class loginClassTest {
         assertEquals(expResult, result);
        
     }
-
+// this is to check what possible mistake that the user might have inputed
     @Test
     public void testInValidateUserName() {
         System.out.println("validateUserName");
