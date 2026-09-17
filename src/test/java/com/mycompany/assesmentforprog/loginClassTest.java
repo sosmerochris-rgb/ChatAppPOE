@@ -51,7 +51,7 @@ public class loginClassTest {
         assertEquals(expResult, result);
         
     }
-    //this is to test whether thge password is wrong
+    //this is to test whether thge password is 
     @Test
     public void testInValidatePassword() {
         System.out.println("validatePassword");
