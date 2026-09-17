@@ -63,7 +63,7 @@ public class loginClassTest {
        
     }
 
-   
+   //this is to validate whether the number is correct
     @Test
     public void testValidatPhoneNumber() {
         System.out.println("validatPhoneNumber");
@@ -74,6 +74,7 @@ public class loginClassTest {
         assertEquals(expResult, result);
        
     }
+    //this is to validate whether the cell number is correct
     @Test
     public void testInValidatPhoneNumber() {
         System.out.println("validatPhoneNumber");
