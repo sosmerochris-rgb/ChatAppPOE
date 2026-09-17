@@ -47,7 +47,7 @@ public class AssesmentForPROG {
                       + "contains a underscore and the lenghth does not exceed 5 characters.");
           }
           
-              //display message for the Password 
+              //display message for the Password //lklll 
           if (PassCheck){
               System.out.println("Password is successfully captured");
           } else {
