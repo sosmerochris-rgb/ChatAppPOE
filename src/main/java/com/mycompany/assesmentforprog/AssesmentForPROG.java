@@ -81,7 +81,7 @@ public class AssesmentForPROG {
 
                 
                 String id = msgClass.generateID();
-                System.out.print("Enter Recipient (+27... max 10 chars): ");
+                System.out.print("Enter Recipient (+27... max 12 chars): ");
                 String recipient = input.nextLine();
 
                 String checkRec = msgClass.checkRecipientCell(recipient);
@@ -122,7 +122,6 @@ public class AssesmentForPROG {
                 if(sendChoice == 1){
                     message.totalMessages++;
                     message.allMessages += "\n" + id + " " + hash + " " + recipient + " " + text;
-                    // Store in JSON also
                     msgClass.storeMessage(id, hash, recipient, text);
                 } else if(sendChoice == 3){
                     msgClass.storeMessage(id, hash, recipient, text);
