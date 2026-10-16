@@ -44,11 +44,11 @@ public class AssesmentForPROG {
 
         System.out.println("\n=== LOGIN ===");
         System.out.print("Username: ");
-        String lu = input.nextLine();
+        String loginUser = input.nextLine();
         System.out.print("Password: ");
-        String lp = input.nextLine();
+        String loginpass = input.nextLine();
 
-        boolean loggedIn = login.loginUser(lu, lp);
+        boolean loggedIn = login.loginUser(loginUser,loginpass );
         System.out.println(login.returnLoginStatus(loggedIn, fName, lName));
 
         if(!loggedIn){

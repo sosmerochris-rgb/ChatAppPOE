@@ -5,62 +5,71 @@
 package com.mycompany.assesmentforprog;
 import org.json.JSONObject;
 import java.util.Random;
-import java.io.FilterWriter;
+import java.io.FileWriter;
 /**
  *
  * @author Student
  */
 public class message {
-    String messageID;
-    String recipient; 
-    String messageText; 
-    String hash;
-    static int total = 0;
-    
-    public boolean checkMessageID(String id){
-    if(id.length()<=10)
-    {return true;}
-    else {return false;}
+
+    public static int totalMessages = 0;
+    public static String allMessages = "";
+
+    public String generateID() {
+        Random random = new Random();
+        String id = "";
+        for (int i = 0; i < 10; i++) {
+            id += random.nextInt(10);
+        }
+        return id;
     }
-    
-}
-public String checkRecipientCell( String cell){
-if (cell.length()<=10 && cell.startsWith("+")){
-    return "cellphone succefully captured"; 
-}else{
-    return "the phone number is incorrectly formmated or may not contain a international code";
-}}
 
-public String checkMessageHash( String id, int num, String message){
-String[] parts = message.split(" ");
-String first = parts[0];
-String last = parts[parts.length-1];
-String h = id.substring(0,2) + ":" + num+ ":" + first + last;
-return h.toUpperCase();
-}
+    public boolean checkMessageID(String id) {
+        return id.length() <= 10;
+    }
 
-public String sentMessage(int choice){
-if (choice == 1){ return "message has been sent succesfully"; }
-if (choice == 2 ){ return "click ) to delete this message";}
-if (choice == 3 ){return "message is succefully stored";}
-return "invalid";
-}
+    public String checkRecipientCell(String cell) {
+        if (cell.length() <= 10 && cell.startsWith("+")) {
+            return "Cellphone number successfully captured.";
+        }
+        return "The phone number is incorrectly formatted or does not contain an international code.";
+    }
 
-//this is the storeMessagefor the JSON where i do research part
-public void storeMessage(String id, String hash, String rec, String text){
-try{
-    org.json.JSONObject obj = new org.json.JSONObject();
-    obj.put("messageID", id);
-    obj.put("messageHash", hash);
-    obj.put("recipient", rec);
-    obj.put("message", text);
-    java.io.FileWriter file = new java.io.FilterWriter("message.json", true);
-    file.write(obj.toString(4)) + "\n";
-     file.close();
-    } catch(Exception e){
+    public String checkMessageHash(String id, int num, String message) {
+        String[] words = message.split(" ");
+        String first = words[0];
+        String last = words[words.length - 1];
+
+        String hash = id.substring(0, 2) + ":" + num + ":" + first + last;
+        return hash.toUpperCase();
+    }
+
+    public String sentMessage(int choice) {
+        if (choice == 1) {
+            return "Message has been sent successfully.";
+        }
+        if (choice == 2) {
+            return "Message has been discarded.";
+        }
+        if (choice == 3) {
+            return "Message is successfully stored.";
+        }
+        return "Invalid choice.";
+    }
+
+    public void storeMessage(String id, String hash, String recipient, String text) {
+        JSONObject obj = new JSONObject();
+        obj.put("messageID", id);
+        obj.put("messageHash", hash);
+        obj.put("recipient", recipient);
+        obj.put("message", text);
+
+        try (FileWriter file = new FileWriter("messages.json", true)) {
+            file.write(obj.toString(4) + "\n");
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            }
-}
+        }
+    }}
         
        
 
