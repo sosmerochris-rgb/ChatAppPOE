@@ -25,11 +25,11 @@ public class message {
     }
 
     public boolean checkMessageID(String id) {
-        return id.length() <= 10;
+        return id.length() <= 12;
     }
 
     public String checkRecipientCell(String cell) {
-        if (cell.length() <= 10 && cell.startsWith("+")) {
+        if (cell.length() <= 12 && cell.startsWith("+27")) {
             return "Cellphone number successfully captured.";
         }
         return "The phone number is incorrectly formatted or does not contain an international code.";
