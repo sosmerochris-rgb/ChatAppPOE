@@ -14,71 +14,132 @@ public class AssesmentForPROG {
     
 
     public static void main(String[] args) {
-        var input = new Scanner(System.in);
-        System.out.println("creat a account");
+          Scanner input = new Scanner(System.in);
         loginClass login = new loginClass();
+
         
-        //we start by getting the username 
-         System.out.println("please enter a UserNme that you would like to use");
-        String UserName = input.nextLine();
-         
-         //follow by creating a password 
-         System.out.println("please enter a Password that you would like to use");
-         String password = input.nextLine();
-         
-         //theh we get the user's valid south african phone Number
-         System.out.println("please enter a valid south african phone number with the country code +27 e.g +271234567891");
-         String PhoneNumber = input.nextLine();
-         
-         //validating if all the user's inputs are true
-         boolean UserCheck = login.validateUserName(UserName);
-         
-         
-          boolean PassCheck = login.validatePassword(password);
-          
-          boolean PhoneCheck = login.validatPhoneNumber(PhoneNumber);
-          
-          System.out.println("\n=====rtesults===");
-          //display message for the userName 
-          if (UserCheck){
-              System.out.println("UserName is successfully captured");
-          } else {
-              System.out.println("the UserName you created does not meet our requirments, please make sure that the userName you created"
-                      + "contains a underscore and the lenghth does not exceed 5 characters.");
-          }
-          
-              //display message for the Password 
-          if (PassCheck){
-              System.out.println("Password is successfully captured");
-          } else {
-              System.out.println("the Password you created does not meet our requirments, please make sure that the Password you created"
-                      + "is at least 8 characters long and contains a capital letter, a number, and any special character of your choice"
-                      + "");
-          }
-          //display message for the PhoneNumber
-              if (PhoneCheck){
-              System.out.println("phone number is successfully captured");
-          } else {
-              System.out.println("the phone number you entered does not meet our requirments, please make sure that your phone number has is "
-                      + "10 numders long and please use the valid south african code +27 ");
-              }
-              
-              //the login part
-              if (UserCheck && PassCheck && PhoneCheck){
-               System.out.println("\n===LOGIN==="); 
-               System.out.println("please enter UserName to LOgin");
-               String loginForUser = input.nextLine();
-               
-               System.out.println("please enter Password to login");
-               String LoginPass = input.nextLine();
-               
-               if (loginForUser.equals(UserName)&& LoginPass.equals(password)){
-                 System.out.println("hi user you have successfully logged in");  
-               } else {
-                   System.out.println(" loggin failed. please enter valid userName and/or valid passwaord");
-               }
-          }
-         
-    }}
+        System.out.println("=== REGISTER ===");
+        System.out.print("Enter First Name: ");
+        String fName = input.nextLine();
+        System.out.print("Enter Last Name: ");
+        String lName = input.nextLine();
+        System.out.print("Enter Username: ");
+        String user = input.nextLine();
+        System.out.print("Enter Password: ");
+        String pass = input.nextLine();
+        System.out.print("Enter Cell Number: ");
+        String cell = input.nextLine();
+
+        if(!login.validatPhoneNumber(cell)){
+            System.out.println("Cell phone number incorrectly formatted");
+            return;
+        }
+
+        String reg = login.registerUser(user, pass);
+        System.out.println(reg);
+
+        if(!reg.equals("User has been registered successfully.")){
+            return;
+        }
+
+        System.out.println("\n=== LOGIN ===");
+        System.out.print("Username: ");
+        String lu = input.nextLine();
+        System.out.print("Password: ");
+        String lp = input.nextLine();
+
+        boolean loggedIn = login.loginUser(lu, lp);
+        System.out.println(login.returnLoginStatus(loggedIn, fName, lName));
+
+        if(!loggedIn){
+            return;
+        }
+
+        // --- PART 2: QUICKCHAT ---
+        System.out.println("\nWelcome to QuickChat.");
+
+        System.out.print("How many messages do you want to enter? ");
+        int limit = Integer.parseInt(input.nextLine());
+
+        message msgClass = new message();
+        int count = 0;
+        boolean running = true;
+
+        while(running){
+            System.out.println("\nChoose an option:");
+            System.out.println("1) Send Messages");
+            System.out.println("2) Show recently sent messages");
+            System.out.println("3) Quit");
+            System.out.print("Enter choice: ");
+            int choice = Integer.parseInt(input.nextLine());
+
+            if(choice == 1){
+                if(count >= limit){
+                    System.out.println("You have reached your message limit of " + limit);
+                    continue;
+                }
+
+                
+                String id = msgClass.generateID();
+                System.out.print("Enter Recipient (+27... max 10 chars): ");
+                String recipient = input.nextLine();
+
+                String checkRec = msgClass.checkRecipientCell(recipient);
+                System.out.println(checkRec);
+                if(checkRec.contains("incorrectly")){
+                    continue;
+                }
+
+                System.out.print("Enter Message (max 250 chars): ");
+                String text = input.nextLine();
+
+                if(text.length() > 250){
+                    System.out.println("Please enter a message of less than 250 characters.");
+                    continue;
+                } else {
+                    System.out.println("Message sent");
+                }
+
+                count++;
+                String hash = msgClass.checkMessageHash(id, count, text);
+
+                System.out.println("\n--- Message Details ---");
+                System.out.println("Message ID: " + id);
+                System.out.println("Message Hash: " + hash);
+                System.out.println("Recipient: " + recipient);
+                System.out.println("Message: " + text);
+
+                System.out.println("\nWhat do you want to do?");
+                System.out.println("1) Send Message");
+                System.out.println("2) Disregard Message");
+                System.out.println("3) Store Message to send later");
+                System.out.print("Choice: ");
+                int sendChoice = Integer.parseInt(input.nextLine());
+
+                String result = msgClass.sentMessage(sendChoice);
+                System.out.println(result);
+
+                if(sendChoice == 1){
+                    message.totalMessages++;
+                    message.allMessages += "\n" + id + " " + hash + " " + recipient + " " + text;
+                    // Store in JSON also
+                    msgClass.storeMessage(id, hash, recipient, text);
+                } else if(sendChoice == 3){
+                    msgClass.storeMessage(id, hash, recipient, text);
+                    System.out.println("Stored to messages.json");
+                }
+
+            } else if(choice == 2){
+                System.out.println("Coming Soon.");
+            } else if(choice == 3){
+                System.out.println("Total messages sent: " + message.totalMessages);
+                System.out.println("Quitting...");
+                running = false;
+            }
+        }
+
+        input.close();
+    }
+}
     
 
