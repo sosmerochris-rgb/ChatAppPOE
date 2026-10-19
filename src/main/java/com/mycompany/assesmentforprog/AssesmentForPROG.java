@@ -48,14 +48,13 @@ public class AssesmentForPROG {
         System.out.print("Password: ");
         String loginpass = input.nextLine();
 
-        boolean loggedIn = login.loginUser(loginUser,loginpass );
+        boolean loggedIn = login.loginUser(loginUser,);
         System.out.println(login.returnLoginStatus(loggedIn, fName, lName));
 
         if(!loggedIn){
             return;
         }
 
-        // --- PART 2: QUICKCHAT ---
         System.out.println("\nWelcome to QuickChat.");
 
         System.out.print("How many messages do you want to enter? ");
@@ -63,7 +62,7 @@ public class AssesmentForPROG {
 
         message msgClass = new message();
         int count = 0;
-        boolean running = true;
+        boolean running = false;
 
         while(running){
             System.out.println("\nChoose an option:");
