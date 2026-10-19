@@ -48,7 +48,7 @@ public class AssesmentForPROG {
         System.out.print("Password: ");
         String loginpass = input.nextLine();
 
-        boolean loggedIn = login.loginUser(loginUser,);
+        boolean loggedIn = login.loginUser(loginUser,loginpass);
         System.out.println(login.returnLoginStatus(loggedIn, fName, lName));
 
         if(!loggedIn){
@@ -62,7 +62,7 @@ public class AssesmentForPROG {
 
         message msgClass = new message();
         int count = 0;
-        boolean running = false;
+        boolean running = true;
 
         while(running){
             System.out.println("\nChoose an option:");
